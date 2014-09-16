@@ -25,7 +25,7 @@ function myFunction() {
 
 or
 
-<pre><code>```
+<pre><code>```js
 var foo = 'bar';
 function myFunction() {
     return 'myFunction';
