@@ -13,6 +13,17 @@
         return (/\[cw:code\s?lang="[\s\S]*"\]/gmi).test(message);
     };
 
+
+    /**
+     * Return true if message has code backtick tags.
+     *
+     * @param {String} message Original message text
+     * @return {Boolean} true / false
+     */
+    var hasCodeBackTickTag = function (message) {
+        return (/`{3}(.+?)?\n/gmi).test(message);
+    };
+
     /**
      * Revert <a> tag link to URL string.
      *
@@ -73,6 +84,31 @@
     };
 
     /**
+     * Convert backtick tag
+     *
+     * @param {String} Chat message.
+     * @return {String} Chat message that has been converted.
+     */
+    var convertBackTickTag = function (message) {
+        var re = new RegExp(/`{3}.*/gmi),
+            result = message.match(re),
+            syntax_type;
+        if (Array.isArray(result) && result.length % 2 === 0) {
+            result.forEach(function (match_str, index) {
+                index++;
+                if (index % 2 === 0) {
+                    message = message.replace(match_str, "[/cw:code]");
+                } else {
+                    syntax_type = match_str.match(/`{3}([\s\S]*)/)[1];
+                    syntax_type = syntax_type || "no-highlight";
+                    message = message.replace(match_str, "[cw:code lang=\"" + syntax_type + "\"]");
+                }
+            });
+        }
+        return message;
+    };
+
+    /**
      * Convert message.
      *
      * @param {String} Chat message.
@@ -82,6 +118,7 @@
         message = revertHtmlLink(message);
         message = revertEmoticon(message);
         message = removeHtmlTag(message);
+        message = convertBackTickTag(message);
         return finalizeMessage(message);
     };
 
@@ -98,7 +135,7 @@
                 $msg = $this.html();
 
             // Convert message
-            if ($msg && hasCodeBlockTag($msg)) {
+            if ($msg && hasCodeBlockTag($msg) || $msg && hasCodeBackTickTag($msg)) {
                 $this.html(convertMessage($msg));
             }
         });

@@ -23,6 +23,15 @@ function myFunction() {
 [/cw:code]
 ```
 
+or
+
+<pre><code>\\\
+var foo = 'bar';
+function myFunction() {
+    return 'myFunction';
+}
+\\\</code></pre>
+
 ### Only disable emoticons
 
 ```
@@ -30,6 +39,12 @@ function myFunction() {
 :):(:D8-):o;);(
 [/cw:code]
 ```
+
+or
+
+<pre><code>```
+:):(:D8-):o;);(
+```</code></pre>
 
 Please see ["highlight.js" document](http://highlightjs.readthedocs.org/en/latest/css-classes-reference.html) how enable language names.
 
