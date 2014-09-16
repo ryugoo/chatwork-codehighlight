@@ -25,12 +25,12 @@ function myFunction() {
 
 or
 
-<pre><code>\\\
+<pre><code>```
 var foo = 'bar';
 function myFunction() {
     return 'myFunction';
 }
-\\\</code></pre>
+```</code></pre>
 
 ### Only disable emoticons
 
